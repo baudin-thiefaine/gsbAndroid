@@ -3,6 +3,7 @@
 namespace AndroidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Praticien
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Praticien", indexes={@ORM\Index(name="FK_Praticien_Visiteur", columns={"pra_visiteur"}), @ORM\Index(name="FK_Praticien_Type_Praticien", columns={"pra_typeCode"})})
  * @ORM\Entity
  */
-class Praticien
+class Praticien implements JsonSerializable
 {
     /**
      * @var int
@@ -286,4 +287,19 @@ class Praticien
     {
         return $this->praVisiteur;
     }
+
+    public function jsonSerialize() {
+        return array(
+            "praNum"=>$this->praNum,
+            "praNom"=>$this->praNom,
+            "praPrenom"=>$this->praPrenom,
+            "praAdresse"=>$this->getPraAdresse,
+            "praCp"=>$this->getPraCp,
+            "praVille"=>$this->getPraVille,
+            "praCoefNotoriete"=>$this->getPraCoefnotoriete,
+            "praTypeCode"=>$this->getPraTypecode()->getTypeCode,
+            "praVisiteur"=>$this->praVisiteur
+            );
+    }
+
 }

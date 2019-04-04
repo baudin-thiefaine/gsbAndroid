@@ -3,6 +3,7 @@
 namespace AndroidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Visiteur
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Visiteur")
  * @ORM\Entity
  */
-class Visiteur
+class Visiteur implements JsonSerializable
 {
     /**
      * @var string
@@ -249,4 +250,18 @@ class Visiteur
     {
         return $this->visMdp;
     }
+
+    public function jsonSerialize() {
+        return array(
+            'visMatricule' => $this->visMatricule,
+            'visNom' => $this->visNom,
+            'visPrenom' => $this->visPrenom,
+            'visAdresse' => $this->visAdresse,
+            'visCp' => $this->visCp,
+            'visVille' => $this->visVille,
+            'visLogin' => $this->visLogin,
+            'visMdp' => $this->visMdp
+        );
+    }
+
 }

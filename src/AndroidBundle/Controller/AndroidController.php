@@ -44,10 +44,9 @@ class AndroidController extends Controller
         
         //$leVisiteur->encode_Json();
         
-        if($leVisiteur != null){
-            return new JsonResponse($leVisiteur->getvisMatricule());
-        }
-        return new JsonResponse(FALSE);
+        $this->get('serializer')->serialize($leVisiteur, 'json');
+        return new JsonResponse($leVisiteur);
+        
     }   
     
     
