@@ -84,4 +84,206 @@ class Praticien
     private $praVisiteur;
 
 
+
+    /**
+     * Get praNum.
+     *
+     * @return int
+     */
+    public function getPraNum()
+    {
+        return $this->praNum;
+    }
+
+    /**
+     * Set praNom.
+     *
+     * @param string|null $praNom
+     *
+     * @return Praticien
+     */
+    public function setPraNom($praNom = null)
+    {
+        $this->praNom = $praNom;
+
+        return $this;
+    }
+
+    /**
+     * Get praNom.
+     *
+     * @return string|null
+     */
+    public function getPraNom()
+    {
+        return $this->praNom;
+    }
+
+    /**
+     * Set praPrenom.
+     *
+     * @param string|null $praPrenom
+     *
+     * @return Praticien
+     */
+    public function setPraPrenom($praPrenom = null)
+    {
+        $this->praPrenom = $praPrenom;
+
+        return $this;
+    }
+
+    /**
+     * Get praPrenom.
+     *
+     * @return string|null
+     */
+    public function getPraPrenom()
+    {
+        return $this->praPrenom;
+    }
+
+    /**
+     * Set praAdresse.
+     *
+     * @param string|null $praAdresse
+     *
+     * @return Praticien
+     */
+    public function setPraAdresse($praAdresse = null)
+    {
+        $this->praAdresse = $praAdresse;
+
+        return $this;
+    }
+
+    /**
+     * Get praAdresse.
+     *
+     * @return string|null
+     */
+    public function getPraAdresse()
+    {
+        return $this->praAdresse;
+    }
+
+    /**
+     * Set praCp.
+     *
+     * @param string|null $praCp
+     *
+     * @return Praticien
+     */
+    public function setPraCp($praCp = null)
+    {
+        $this->praCp = $praCp;
+
+        return $this;
+    }
+
+    /**
+     * Get praCp.
+     *
+     * @return string|null
+     */
+    public function getPraCp()
+    {
+        return $this->praCp;
+    }
+
+    /**
+     * Set praVille.
+     *
+     * @param string|null $praVille
+     *
+     * @return Praticien
+     */
+    public function setPraVille($praVille = null)
+    {
+        $this->praVille = $praVille;
+
+        return $this;
+    }
+
+    /**
+     * Get praVille.
+     *
+     * @return string|null
+     */
+    public function getPraVille()
+    {
+        return $this->praVille;
+    }
+
+    /**
+     * Set praCoefnotoriete.
+     *
+     * @param float|null $praCoefnotoriete
+     *
+     * @return Praticien
+     */
+    public function setPraCoefnotoriete($praCoefnotoriete = null)
+    {
+        $this->praCoefnotoriete = $praCoefnotoriete;
+
+        return $this;
+    }
+
+    /**
+     * Get praCoefnotoriete.
+     *
+     * @return float|null
+     */
+    public function getPraCoefnotoriete()
+    {
+        return $this->praCoefnotoriete;
+    }
+
+    /**
+     * Set praTypecode.
+     *
+     * @param \AndroidBundle\Entity\TypePraticien|null $praTypecode
+     *
+     * @return Praticien
+     */
+    public function setPraTypecode(\AndroidBundle\Entity\TypePraticien $praTypecode = null)
+    {
+        $this->praTypecode = $praTypecode;
+
+        return $this;
+    }
+
+    /**
+     * Get praTypecode.
+     *
+     * @return \AndroidBundle\Entity\TypePraticien|null
+     */
+    public function getPraTypecode()
+    {
+        return $this->praTypecode;
+    }
+
+    /**
+     * Set praVisiteur.
+     *
+     * @param \AndroidBundle\Entity\Visiteur|null $praVisiteur
+     *
+     * @return Praticien
+     */
+    public function setPraVisiteur(\AndroidBundle\Entity\Visiteur $praVisiteur = null)
+    {
+        $this->praVisiteur = $praVisiteur;
+
+        return $this;
+    }
+
+    /**
+     * Get praVisiteur.
+     *
+     * @return \AndroidBundle\Entity\Visiteur|null
+     */
+    public function getPraVisiteur()
+    {
+        return $this->praVisiteur;
+    }
 }

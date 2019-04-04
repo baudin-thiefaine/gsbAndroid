@@ -36,4 +36,62 @@ class TypePraticien
     private $typeLieu;
 
 
+
+    /**
+     * Get typeCode.
+     *
+     * @return string
+     */
+    public function getTypeCode()
+    {
+        return $this->typeCode;
+    }
+
+    /**
+     * Set typeLibelle.
+     *
+     * @param string|null $typeLibelle
+     *
+     * @return TypePraticien
+     */
+    public function setTypeLibelle($typeLibelle = null)
+    {
+        $this->typeLibelle = $typeLibelle;
+
+        return $this;
+    }
+
+    /**
+     * Get typeLibelle.
+     *
+     * @return string|null
+     */
+    public function getTypeLibelle()
+    {
+        return $this->typeLibelle;
+    }
+
+    /**
+     * Set typeLieu.
+     *
+     * @param string|null $typeLieu
+     *
+     * @return TypePraticien
+     */
+    public function setTypeLieu($typeLieu = null)
+    {
+        $this->typeLieu = $typeLieu;
+
+        return $this;
+    }
+
+    /**
+     * Get typeLieu.
+     *
+     * @return string|null
+     */
+    public function getTypeLieu()
+    {
+        return $this->typeLieu;
+    }
 }

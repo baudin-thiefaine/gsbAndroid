@@ -27,9 +27,6 @@ class AndroidController extends Controller
         //return $this->render('AndroidBundle:Default:index.html.twig');
     }
     
-    public function dqsAction(){
-        
-    }
     
     /**
      * 
