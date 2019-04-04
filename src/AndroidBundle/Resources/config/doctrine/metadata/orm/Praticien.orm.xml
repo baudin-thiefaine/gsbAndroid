@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Praticien" table="Praticien">
+    <indexes>
+      <index name="FK_Praticien_Type_Praticien" columns="pra_typeCode"/>
+      <index name="FK_Praticien_Visiteur" columns="pra_visiteur"/>
+    </indexes>
+    <id name="praNum" type="integer" column="pra_num">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="praNom" type="string" column="pra_nom" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="praPrenom" type="string" column="pra_prenom" length="60" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="praAdresse" type="string" column="pra_adresse" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="praCp" type="string" column="pra_cp" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="praVille" type="string" column="pra_ville" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="praCoefnotoriete" type="float" column="pra_coefNotoriete" precision="10" scale="0" nullable="true"/>
+    <many-to-one field="praTypecode" target-entity="TypePraticien" fetch="LAZY">
+      <join-columns>
+        <join-column name="pra_typeCode" referenced-column-name="type_code"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="praVisiteur" target-entity="Visiteur" fetch="LAZY">
+      <join-columns>
+        <join-column name="pra_visiteur" referenced-column-name="vis_matricule"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="RapportVisite" table="Rapport_Visite">
+    <indexes>
+      <index name="FK_RV_Praticien" columns="pra_num"/>
+      <index name="IDX_1B1F3C9F7BFA9247" columns="vis_matricule"/>
+    </indexes>
+    <id name="rapNum" type="integer" column="rap_num"/>
+    <id name="visMatricule" association-key="true"/>
+    <field name="consulte" type="boolean" column="consulte" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="rapBilan" type="string" column="rap_bilan" length="510" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="rapDatevisite" type="date" column="rap_dateVisite" nullable="true"/>
+    <field name="rapDaterapport" type="date" column="rap_dateRapport" nullable="true"/>
+    <one-to-one field="visMatricule" target-entity="Visiteur" fetch="LAZY">
+      <join-columns>
+        <join-column name="vis_matricule" referenced-column-name="vis_matricule"/>
+      </join-columns>
+    </one-to-one>
+    <many-to-one field="praNum" target-entity="Praticien" fetch="LAZY">
+      <join-columns>
+        <join-column name="pra_num" referenced-column-name="pra_num"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

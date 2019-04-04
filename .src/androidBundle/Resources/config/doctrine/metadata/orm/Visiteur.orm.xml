@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Visiteur" table="Visiteur">
+    <id name="visMatricule" type="string" column="vis_matricule" length="20">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="visNom" type="string" column="vis_nom" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visPrenom" type="string" column="vis_prenom" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visAdresse" type="string" column="vis_adresse" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visCp" type="string" column="vis_cp" length="10" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visVille" type="string" column="vis_ville" length="60" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visLogin" type="string" column="vis_login" length="25" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="visMdp" type="string" column="vis_mdp" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

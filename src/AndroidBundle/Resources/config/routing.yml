@@ -1,0 +1,17 @@
+android_homepage:
+    path:     /index
+    defaults: { _controller:AndroidBundle:Android:index }
+
+
+test:
+    path:   /test
+    defaults: {_controller:AndroidBundle:Android:test}
+
+connexion:
+    path:   /connexion/{login}/{password}
+    defaults: {_controller:AndroidBundle:Android:connexion}
+    
+    
+recupListeRapport:
+    path:    /recupListeRapport/{idVisiteur}
+    defaults: {_controller:AndroidBundle:Android:recupListeRapport}

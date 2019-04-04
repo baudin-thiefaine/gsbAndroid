@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="TypePraticien" table="Type_Praticien">
+    <id name="typeCode" type="string" column="type_code" length="6">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="typeLibelle" type="string" column="type_libelle" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="typeLieu" type="string" column="type_lieu" length="70" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
