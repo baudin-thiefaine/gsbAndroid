@@ -29,6 +29,8 @@ class AndroidController extends Controller
     
     
     /**
+     * connexionAction
+     * @url /connexion/{login}/{password}
      * 
      * @param string $login Le login entré par le visiteur
      * @param string $password le mot de passe entré par le visiteur
@@ -51,6 +53,7 @@ class AndroidController extends Controller
     
     
     /**
+     * getLeVisi
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
@@ -66,6 +69,8 @@ class AndroidController extends Controller
     }
     
     /**
+     * recupListeRapportAction
+     * @url 
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
