@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use DateTime;
 
 /**
  * Description of AndroidController
@@ -24,13 +25,12 @@ class AndroidController extends Controller
     public function indexAction()
     {
         return new Response("toto");
-        //return $this->render('AndroidBundle:Default:index.html.twig');
     }
     
     
     /**
      * connexionAction
-     * @url /connexion/{login}/{password}
+     * 
      * 
      * @param string $login Le login entré par le visiteur
      * @param string $password le mot de passe entré par le visiteur
@@ -69,8 +69,24 @@ class AndroidController extends Controller
     }
     
     /**
+     * getLeVisi
+     * 
+     * @param string $idVisiteur Le matricule du visiteur
+     *
+     * @return Visiteur Retourne un objet de type Visiteur correspondant 
+     *                  au matricule passé en parametre
+     *
+     */
+    public function getLePraticien($idPrat){
+        $em = $this->getDoctrine()->getManager();
+        $rp = $em->getRepository('AndroidBundle:Praticien');
+        $lePraticien = $rp->findOneByVisMatricule($idPrat);
+        return $lePraticien;
+    }
+    
+    /**
      * recupListeRapportAction
-     * @url 
+     * 
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
@@ -91,6 +107,27 @@ class AndroidController extends Controller
         
     }
     
+    public function ajouterRapportAction(){
+        try{
+            $idVisi = $_POST['idVisi'];
+            $idPraticien = $_POST['idPraticien'];
+            $dateVisite = $_POST['dateVisite'];
+            $dateRapport = new DateTime('now');
+            $bilan = $_POST['bilan'];
+            
+            $leVisiteur = $this->getLeVisi($idVisi);
+            $lePraticien = $this->getLePraticien($idPraticien);
+            
+            
+            
+            
+            
+            
+        } 
+        catch (Exception $ex) {
+            return new JsonResponse('maBite');
+        }
+    }
     
     public function dAction(){
         
