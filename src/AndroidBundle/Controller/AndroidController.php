@@ -14,6 +14,8 @@ use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
+use Symfony\Component\HttpFoundation\Request;
+use AndroidBundle\Entity\RapportVisite;
 
 /**
  * Description of AndroidController
@@ -49,9 +51,9 @@ class AndroidController extends Controller
         $this->get('serializer')->serialize($leVisiteur, 'json');
         return new JsonResponse($leVisiteur);
         
-    }   
+    }  
     
-    
+        
     /**
      * getLeVisi
      * 
@@ -80,7 +82,7 @@ class AndroidController extends Controller
     public function getLePraticien($idPrat){
         $em = $this->getDoctrine()->getManager();
         $rp = $em->getRepository('AndroidBundle:Praticien');
-        $lePraticien = $rp->findOneByVisMatricule($idPrat);
+        $lePraticien = $rp->findOneByPraNum($idPrat);
         return $lePraticien;
     }
     
@@ -107,26 +109,53 @@ class AndroidController extends Controller
         
     }
     
-    public function ajouterRapportAction(){
+    
+    /**
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajouterRapportAction(Request $request){
+        
         try{
-            $idVisi = $_POST['idVisi'];
-            $idPraticien = $_POST['idPraticien'];
-            $dateVisite = $_POST['dateVisite'];
+            // on récupère les infos passés en POST
+            $idVisi = $request->request->get('idVisi');
+            $idPraticien = $request->request->get('idPraticien');
+            $dateVisite = $request->request->get('dateVisite');
+            $bilan = $request->request->get('bilan');
             $dateRapport = new DateTime('now');
-            $bilan = $_POST['bilan'];
+            $dateRapport->format('d-m-Y');
+            
+            
+                      
+            //Puis on crée les objets et on les insère dans la BDD
             
             $leVisiteur = $this->getLeVisi($idVisi);
             $lePraticien = $this->getLePraticien($idPraticien);
             
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+            $leRapport = new RapportVisite();
+            $leRapport->setConsulte(false);
+            $leRapport->setPraNum($lePraticien);
+            $leRapport->setRapBilan($bilan);
+            $leRapport->setRapDaterapport($dateRapport);
+            $leRapport->setRapDatevisite($dateVisite);
+            $leRapport->setVisMatricule($leVisiteur);
             
             
             
+            $em->persist($leRapport);
+            $em->flush();
+            $em->clear();
             
+            return new JsonResponse(true);
             
         } 
         catch (Exception $ex) {
-            return new JsonResponse('maBite');
+            return new JsonResponse($ex);
         }
+        
     }
     
     public function dAction(){
