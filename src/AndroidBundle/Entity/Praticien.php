@@ -293,11 +293,11 @@ class Praticien implements JsonSerializable
             "praNum"=>$this->praNum,
             "praNom"=>$this->praNom,
             "praPrenom"=>$this->praPrenom,
-            "praAdresse"=>$this->getPraAdresse,
-            "praCp"=>$this->getPraCp,
-            "praVille"=>$this->getPraVille,
-            "praCoefNotoriete"=>$this->getPraCoefnotoriete,
-            "praTypeCode"=>$this->getPraTypecode()->getTypeCode,
+            "praAdresse"=>$this->praAdresse,
+            "praCp"=>$this->praCp,
+            "praVille"=>$this->praVille,
+            "praCoefNotoriete"=>$this->praCoefnotoriete,
+            "praTypeCode"=>$this->praTypecode->getTypeCode(),
             "praVisiteur"=>$this->praVisiteur
             );
     }

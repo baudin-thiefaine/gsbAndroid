@@ -97,15 +97,21 @@ class AndroidController extends Controller
      *
      */
     public function recupListeRapportAction($idVisiteur){
-        $visiteur = $this->getLeVisi($idVisiteur);
-        $em = $this->getDoctrine()->getManager();
-        $rp = $em->getRepository('AndroidBundle:RapportVisite');
+        try{
+            $visiteur = $this->getLeVisi($idVisiteur);
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+
+            $lesRapports = $rp->findBy(array('visMatricule' => $visiteur));
+            //dump($lesRapports);
+
+            $this->get('serializer')->serialize($lesRapports, 'json');
+            return new JsonResponse($lesRapports);
+        }
+        catch (Exception $ex){
+            return new JsonResponse($ex);
+        }
         
-        $lesRapports = $rp->findBy(array('visMatricule' => $visiteur));
-        //dump($lesRapports);
-        
-        $this->get('serializer')->serialize($lesRapports, 'json');
-        return new JsonResponse($lesRapports);
         
     }
     
@@ -116,7 +122,6 @@ class AndroidController extends Controller
      * @return JsonResponse
      */
     public function ajouterRapportAction(Request $request){
-        
         try{
             // on récupère les infos passés en POST
             $idVisi = $request->request->get('idVisi');
@@ -158,9 +163,41 @@ class AndroidController extends Controller
         
     }
     
-    public function dAction(){
-        
+    /**
+     * 
+     * @param int $mois
+     * @param int $annee
+     * @return Json<RapportVisite> Retourne un tableau Json contenant les rapports
+     * correspondants au mois et à l'annee passé en parametre
+     * 
+     */
+    public function getLesRapportsParDateAction($mois, $annee){
+        try{
+            
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+            
+            $lesRapports = array();
+            $tousLesRapports = $rp->findAll();
+            
+            foreach ($tousLesRapports as $unRapport){
+                
+                $date = $unRapport->getRapDaterapport();
+                if(($date->format('Y') == $annee) && ($date->format('m') == $mois)){
+                    array_push($lesRapports, $unRapport);
+                }
+            }
+            
+
+            $this->get('serializer')->serialize($lesRapports, 'json');
+            return new JsonResponse($lesRapports);
+            
+        }
+        catch (Exception $ex){
+            return new JsonResponse($ex);
+        }
     }
+    
 
 
     public function testAction(){
