@@ -66,8 +66,16 @@ class AndroidController extends Controller
     public function getLeVisi($idVisiteur){
         $em = $this->getDoctrine()->getManager();
         $rp = $em->getRepository('AndroidBundle:Visiteur');
-        $leVisiteur = $rp->findOneByVisMatricule($idVisiteur);
+        $leVisiteur = $rp->findOneBy(array('visMatricule'=>$idVisiteur));
         return $leVisiteur;
+    }
+    
+    public function getLeVisiAction($idVisiteur){
+        $em = $this->getDoctrine()->getManager();
+        $rp = $em->getRepository('AndroidBundle:Visiteur');
+        $leVisiteur = $rp->findOneBy(array('visMatricule'=>$idVisiteur));
+        $this->get('serializer')->serialize($leVisiteur, 'json');
+        return new JsonResponse($leVisiteur) ;
     }
     
     /**
@@ -111,8 +119,6 @@ class AndroidController extends Controller
         catch (Exception $ex){
             return new JsonResponse($ex);
         }
-        
-        
     }
     
     /**
@@ -153,22 +159,24 @@ class AndroidController extends Controller
     public function ajouterRapportAction(Request $request){
         try{
             // on récupère les infos passés en POST
-            $idVisi = $request->request->get('idVisi');
-            $prenomPraticien = $request->request->get('praPrenom');
-            $nomPraticien = $request->request->get('praNom');
-            $dateVisite = $request->request->get('dateVisite');
+            $idVisi = $request->request->get("idVisi");
+            //$idVisi->json_decode()
+            
+            //return new JsonResponse($idVisi);
+            $idPra = $request->request->get('praNum');
+            $dateVisite = new DateTime($request->request->get('dateVisite'));
             $bilan = $request->request->get('bilan');
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
             
-            
-                      
             //Puis on crée les objets et on les insère dans la BDD
             
-            $leVisiteur = $this->getLeVisi($idVisi);
-            $lePraticien = $this->getLePraticien($prenomPraticien,$nomPraticien );
-            
             $em = $this->getDoctrine()->getManager();
+            $rp2 = $em->getRepository('AndroidBundle:Visiteur');
+            $leVisiteur = $rp2->findOneBy(array('visMatricule'=>$idVisi));
+        
+           
+            $lePraticien = $this->getLePraticien($idPra);
             $rp = $em->getRepository('AndroidBundle:RapportVisite');
             $leRapport = new RapportVisite();
             $leRapport->setConsulte(false);

@@ -35,3 +35,7 @@ recupListeRapportParDate:
 recupRapportParId:
     path:   /recupRapportParId/{idRapport}/{visMatricule}
     defaults: {_controller:AndroidBundle:Android:getunRapportParId}
+    
+sd:
+    path:   /getLeVisiAction/{idVisiteur}
+    defaults: {_controller:AndroidBundle:Android:getLeVisi}
