@@ -245,6 +245,7 @@ class RapportVisite implements JsonSerializable
     public function jsonSerialize() {
         return array(
             "rapNum"=>$this->rapNum,
+            "consulte"=>$this->consulte,
             "dateRapport" => $this->rapDaterapport->format('d-m-Y'),
             "dateVisite" => $this->rapDatevisite->format('d-m-Y'),
             "praticien" => $this->praNum->jsonSerialize(),
