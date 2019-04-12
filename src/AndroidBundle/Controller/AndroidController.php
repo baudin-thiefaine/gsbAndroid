@@ -125,7 +125,8 @@ class AndroidController extends Controller
         try{
             // on récupère les infos passés en POST
             $idVisi = $request->request->get('idVisi');
-            $idPraticien = $request->request->get('idPraticien');
+            $idPraticien = $request->request->get('praPrenom');
+            $nomPraticien = $request->request->get('praNom');
             $dateVisite = $request->request->get('dateVisite');
             $bilan = $request->request->get('bilan');
             $dateRapport = new DateTime('now');
@@ -198,6 +199,39 @@ class AndroidController extends Controller
         }
     }
     
+    
+    /**
+     * 
+     * @param int $idRapport : le numero du rapport à retourner
+     * @param String $visMatricule : le numero du visiteur a qui appartient le rapport
+     * @return Json<RapportVisite> Retourne l'objet correspondant
+     * 
+     */
+    public function getunRapportParIdAction($idRapport, $visMatricule){
+        try{
+            
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+            
+            
+            $leRapport = $rp->findOneBy(array('rapNum'=>$idRapport, 'visMatricule'=> $visMatricule));
+            
+            
+            
+            $leRapport->setConsulte(true);
+            
+            $em->persist($leRapport);
+            $em->flush();
+            $em->clear();
+            
+            $this->get('serializer')->serialize($leRapport, 'json');
+            return new JsonResponse($leRapport);
+            
+        }
+        catch (Exception $ex){
+            return new JsonResponse($ex);
+        }
+    }
 
 
     public function testAction(){

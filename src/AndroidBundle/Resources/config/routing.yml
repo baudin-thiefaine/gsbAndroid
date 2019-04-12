@@ -27,3 +27,7 @@ ajouterRapport:
 recupListeRapportParDate:
     path:   /getLesRapportsParDate/{mois}/{annee}
     defaults: {_controller:AndroidBundle:Android:getLesRapportsParDate}
+    
+recupRapportParId:
+    path:   /recupRapportParId/{idRapport}/{visMatricule}
+    defaults: {_controller:AndroidBundle:Android:getunRapportParId}
