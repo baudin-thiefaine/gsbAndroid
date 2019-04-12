@@ -159,13 +159,10 @@ class AndroidController extends Controller
     public function ajouterRapportAction(Request $request){
         try{
             // on récupère les infos passés en POST
-            $idVisi = $request->request->get("idVisi");
-            //$idVisi->json_decode()
+            $datas = $request->request->get("idVisi");
+            $leRapport = $datas->json_decode();
             
-            //return new JsonResponse($idVisi);
-            $idPra = $request->request->get('praNum');
-            $dateVisite = new DateTime($request->request->get('dateVisite'));
-            $bilan = $request->request->get('bilan');
+            
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
             
@@ -174,17 +171,11 @@ class AndroidController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rp2 = $em->getRepository('AndroidBundle:Visiteur');
             $leVisiteur = $rp2->findOneBy(array('visMatricule'=>$idVisi));
-        
-           
-            $lePraticien = $this->getLePraticien($idPra);
-            $rp = $em->getRepository('AndroidBundle:RapportVisite');
-            $leRapport = new RapportVisite();
             $leRapport->setConsulte(false);
-            $leRapport->setPraNum($lePraticien);
+            
             $leRapport->setRapBilan($bilan);
             $leRapport->setRapDaterapport($dateRapport);
             $leRapport->setRapDatevisite($dateVisite);
-            $leRapport->setVisMatricule($leVisiteur);
             
             
             
