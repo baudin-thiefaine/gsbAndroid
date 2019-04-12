@@ -63,10 +63,10 @@ class AndroidController extends Controller
      *                  au matricule passé en parametre
      *
      */
-    public function getLeVisi($prenomPraticien,$nomPraticien){
+    public function getLeVisi($idVisiteur){
         $em = $this->getDoctrine()->getManager();
         $rp = $em->getRepository('AndroidBundle:Visiteur');
-        $leVisiteur = $rp->findOneBy(array('praPrenom'=> $prenomPraticien, 'praNom'=>$nomPraticien));
+        $leVisiteur = $rp->findOneByVisMatricule($idVisiteur);
         return $leVisiteur;
     }
     
@@ -84,6 +84,35 @@ class AndroidController extends Controller
         $rp = $em->getRepository('AndroidBundle:Praticien');
         $lePraticien = $rp->findOneByPraNum($idPrat);
         return $lePraticien;
+    }
+    
+    /**
+     * recupListeRapportAction
+     * 
+     * 
+     * @param string $idVisiteur Le matricule du visiteur
+     *
+     * @return Json<Praticien> Retourne un tableau Json contenant les praticiens
+     * etant attribués au visiteur dont l'id est passée en paramêtre
+     *
+     */
+    public function recupListePraticienAction($idVisiteur){
+        try{
+            $visiteur = $this->getLeVisi($idVisiteur);
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:Praticien');
+            
+            $lesPraticiens = $rp->findBy(array('praVisiteur' => $visiteur));
+            
+            
+            $this->get('serializer')->serialize($lesPraticiens, 'json');
+            return new JsonResponse($lesPraticiens);
+        }
+        catch (Exception $ex){
+            return new JsonResponse($ex);
+        }
+        
+        
     }
     
     /**

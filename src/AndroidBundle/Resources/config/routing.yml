@@ -15,7 +15,11 @@ connexion:
     path:   /connexion/{login}/{password}
     defaults: {_controller:AndroidBundle:Android:connexion}
     
+recupListePraticien:
+    path:   /recupListePraticien/{idVisiteur}
+    defaults: {_controller:AndroidBundle:Android:RecupListePraticien}
     
+        
 recupListeRapport:
     path:    /recupListeRapport/{idVisiteur}
     defaults: {_controller:AndroidBundle:Android:recupListeRapport}
