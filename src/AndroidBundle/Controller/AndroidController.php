@@ -63,10 +63,10 @@ class AndroidController extends Controller
      *                  au matricule passé en parametre
      *
      */
-    public function getLeVisi($idVisiteur){
+    public function getLeVisi($prenomPraticien,$nomPraticien){
         $em = $this->getDoctrine()->getManager();
         $rp = $em->getRepository('AndroidBundle:Visiteur');
-        $leVisiteur = $rp->findOneByVisMatricule($idVisiteur);
+        $leVisiteur = $rp->findOneBy(array('praPrenom'=> $prenomPraticien, 'praNom'=>$nomPraticien));
         return $leVisiteur;
     }
     
@@ -125,7 +125,7 @@ class AndroidController extends Controller
         try{
             // on récupère les infos passés en POST
             $idVisi = $request->request->get('idVisi');
-            $idPraticien = $request->request->get('praPrenom');
+            $prenomPraticien = $request->request->get('praPrenom');
             $nomPraticien = $request->request->get('praNom');
             $dateVisite = $request->request->get('dateVisite');
             $bilan = $request->request->get('bilan');
@@ -137,7 +137,7 @@ class AndroidController extends Controller
             //Puis on crée les objets et on les insère dans la BDD
             
             $leVisiteur = $this->getLeVisi($idVisi);
-            $lePraticien = $this->getLePraticien($idPraticien);
+            $lePraticien = $this->getLePraticien($prenomPraticien,$nomPraticien );
             
             $em = $this->getDoctrine()->getManager();
             $rp = $em->getRepository('AndroidBundle:RapportVisite');
