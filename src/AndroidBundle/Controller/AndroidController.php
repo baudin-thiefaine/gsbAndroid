@@ -160,34 +160,60 @@ class AndroidController extends Controller
         try{
             // on récupère les infos passés en POST et on désérialize
             
-            $leRapport = $request->request->get('leRapport');
-            $leRapport->json_decode();
+            //return new JsonResponse(true);
+            $rapport = $request->request->get('rapport');
+            
+            $leRapport = json_decode($rapport);
             
             
+            
+            
+                  
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
+            
+            //return new JsonResponse($leRapport);
+            
+            
+            
+            $idVisi = $leRapport->numVis;
+            $idPra = $leRapport->numPra;
+            $bilan = $leRapport->rapBilan;
+            $dateVisite = $leRapport->dateVisite;
+            
+            
+            $annee = $dateVisite->year;
+            $mois = $dateVisite->month;
+            $jour = $dateVisite->dayOfMonth;
+            
+            //$laDateVisite = new DateTime(""+$annee+"-"+$mois+"-"+$jour);
             
             
             $leVisiteur = $this->getLeVisi($idVisi);
             $lePraticien = $this->getLePraticien($idPra);
-            $rp = $em->getRepository('AndroidBundle:RapportVisite');
-            
-            $leRapport->setConsulte(false);
-            $leRapport->setPraNum($lePraticien);
-            $leRapport->setRapDaterapport($dateRapport);
-            $leRapport->setVisMatricule($leVisiteur);
             
             
+            $rapportInsere = new RapportVisite();
+            $rapportInsere->setConsulte(false);
+            $rapportInsere->setPraNum($lePraticien);
+            $rapportInsere->setRapBilan($bilan);
+            $rapportInsere->setRapDaterapport($dateRapport);
+            $rapportInsere->setRapDatevisite($dateVisite);
+            $rapportInsere->setVisMatricule($leVisiteur);
             
-            $em->persist($leRapport);
+             return new JsonResponse(true);
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($rapportInsere);
             $em->flush();
             $em->clear();
             
-            return new JsonResponse(true);
+           
+            
             
         } 
         catch (Exception $ex) {
-            return new JsonResponse($ex);
+            return new JsonResponse($ex->getMessage());
         }
         
     }

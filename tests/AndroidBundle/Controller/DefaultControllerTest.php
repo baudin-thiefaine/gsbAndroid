@@ -14,4 +14,19 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('Hello World', $client->getResponse()->getContent());
     }
+    
+    public function testGetLeVisi(){
+        
+    }
+    public function indexActionTest(){
+       
+        $android = new \AndroidBundle\Controller\AndroidController();
+        $result = $android->indexAction();
+
+        // assert that your calculator added the numbers correctly!
+        $this->assertEquals(42, $result);
+    }
+    
+   
+    
 }

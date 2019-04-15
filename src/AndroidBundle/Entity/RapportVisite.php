@@ -18,7 +18,7 @@ class RapportVisite implements JsonSerializable
      *
      * @ORM\Column(name="rap_num", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $rapNum = '0';
 
