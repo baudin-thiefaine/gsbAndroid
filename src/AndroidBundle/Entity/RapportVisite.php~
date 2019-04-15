@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RapportVisite
  *
- * @ORM\Table(name="Rapport_Visite", indexes={@ORM\Index(name="FK_RV_Praticien", columns={"pra_num"}), @ORM\Index(name="IDX_1B1F3C9F7BFA9247", columns={"vis_matricule"})})
+ * @ORM\Table(name="Rapport_Visite", indexes={@ORM\Index(name="FK_RV_Praticien", columns={"pra_num"}), @ORM\Index(name="fk-rv-visi", columns={"vis_matricule"})})
  * @ORM\Entity
  */
 class RapportVisite
@@ -17,9 +17,9 @@ class RapportVisite
      *
      * @ORM\Column(name="rap_num", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $rapNum = '0';
+    private $rapNum;
 
     /**
      * @var bool|null
@@ -62,9 +62,7 @@ class RapportVisite
     /**
      * @var \Visiteur
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Visiteur")
+     * @ORM\ManyToOne(targetEntity="Visiteur")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="vis_matricule", referencedColumnName="vis_matricule")
      * })

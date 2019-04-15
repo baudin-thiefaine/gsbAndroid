@@ -2,8 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Praticien" table="Praticien">
     <indexes>
-      <index name="FK_Praticien_Type_Praticien" columns="pra_typeCode"/>
       <index name="FK_Praticien_Visiteur" columns="pra_visiteur"/>
+      <index name="FK_Praticien_Type_Praticien" columns="pra_typeCode"/>
     </indexes>
     <id name="praNum" type="integer" column="pra_num">
       <generator strategy="IDENTITY"/>

@@ -8,7 +8,7 @@ use JsonSerializable;
 /**
  * Praticien
  *
- * @ORM\Table(name="Praticien", indexes={@ORM\Index(name="FK_Praticien_Visiteur", columns={"pra_visiteur"}), @ORM\Index(name="FK_Praticien_Type_Praticien", columns={"pra_typeCode"})})
+ * @ORM\Table(name="Praticien", indexes={@ORM\Index(name="FK_Praticien_Type_Praticien", columns={"pra_typeCode"}), @ORM\Index(name="FK_Praticien_Visiteur", columns={"pra_visiteur"})})
  * @ORM\Entity
  */
 class Praticien implements JsonSerializable
@@ -287,7 +287,6 @@ class Praticien implements JsonSerializable
     {
         return $this->praVisiteur;
     }
-
     public function jsonSerialize() {
         return array(
             "praNum"=>$this->praNum,
@@ -301,5 +300,4 @@ class Praticien implements JsonSerializable
             "praVisiteur"=>$this->praVisiteur
             );
     }
-
 }

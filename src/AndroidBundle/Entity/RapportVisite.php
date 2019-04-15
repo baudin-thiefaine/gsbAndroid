@@ -4,11 +4,10 @@ namespace AndroidBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
-
 /**
  * RapportVisite
  *
- * @ORM\Table(name="Rapport_Visite", indexes={@ORM\Index(name="FK_RV_Praticien", columns={"pra_num"}), @ORM\Index(name="IDX_1B1F3C9F7BFA9247", columns={"vis_matricule"})})
+ * @ORM\Table(name="Rapport_Visite", indexes={@ORM\Index(name="FK_RV_Praticien", columns={"pra_num"}), @ORM\Index(name="fk-rv-visi", columns={"vis_matricule"})})
  * @ORM\Entity
  */
 class RapportVisite implements JsonSerializable
@@ -18,9 +17,9 @@ class RapportVisite implements JsonSerializable
      *
      * @ORM\Column(name="rap_num", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $rapNum = '0';
+    private $rapNum;
 
     /**
      * @var bool|null
@@ -63,9 +62,7 @@ class RapportVisite implements JsonSerializable
     /**
      * @var \Visiteur
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Visiteur")
+     * @ORM\ManyToOne(targetEntity="Visiteur")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="vis_matricule", referencedColumnName="vis_matricule")
      * })
@@ -73,20 +70,6 @@ class RapportVisite implements JsonSerializable
     private $visMatricule;
 
 
-
-    /**
-     * Set rapNum.
-     *
-     * @param int $rapNum
-     *
-     * @return RapportVisite
-     */
-    public function setRapNum($rapNum)
-    {
-        $this->rapNum = $rapNum;
-
-        return $this;
-    }
 
     /**
      * Get rapNum.
@@ -221,11 +204,11 @@ class RapportVisite implements JsonSerializable
     /**
      * Set visMatricule.
      *
-     * @param \AndroidBundle\Entity\Visiteur $visMatricule
+     * @param \AndroidBundle\Entity\Visiteur|null $visMatricule
      *
      * @return RapportVisite
      */
-    public function setVisMatricule(\AndroidBundle\Entity\Visiteur $visMatricule)
+    public function setVisMatricule(\AndroidBundle\Entity\Visiteur $visMatricule = null)
     {
         $this->visMatricule = $visMatricule;
 
@@ -235,13 +218,12 @@ class RapportVisite implements JsonSerializable
     /**
      * Get visMatricule.
      *
-     * @return \AndroidBundle\Entity\Visiteur
+     * @return \AndroidBundle\Entity\Visiteur|null
      */
     public function getVisMatricule()
     {
         return $this->visMatricule;
     }
-
     public function jsonSerialize() {
         return array(
             "rapNum"=>$this->rapNum,
@@ -254,5 +236,4 @@ class RapportVisite implements JsonSerializable
             
             );
     }
-
 }

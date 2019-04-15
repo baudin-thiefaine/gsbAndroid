@@ -160,15 +160,10 @@ class AndroidController extends Controller
         try{
             // on récupère les infos passés en POST et on désérialize
             
-            //return new JsonResponse(true);
             $rapport = $request->request->get('rapport');
             
             $leRapport = json_decode($rapport);
-            
-            
-            
-            
-                  
+              
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
             
@@ -194,22 +189,23 @@ class AndroidController extends Controller
             
             
             $rapportInsere = new RapportVisite();
+            
             $rapportInsere->setConsulte(false);
             $rapportInsere->setPraNum($lePraticien);
             $rapportInsere->setRapBilan($bilan);
             $rapportInsere->setRapDaterapport($dateRapport);
-            $rapportInsere->setRapDatevisite($dateVisite);
+            //$rapportInsere->setRapDatevisite($laDateVisite);
             $rapportInsere->setVisMatricule($leVisiteur);
             
-             return new JsonResponse(true);
             
             $em = $this->getDoctrine()->getManager();
+            
             $em->persist($rapportInsere);
+            
             $em->flush();
+            return new JsonResponse(true);
             $em->clear();
-            
-           
-            
+            return new JsonResponse(true);
             
         } 
         catch (Exception $ex) {
