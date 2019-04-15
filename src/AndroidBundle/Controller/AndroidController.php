@@ -158,32 +158,23 @@ class AndroidController extends Controller
      */
     public function ajouterRapportAction(Request $request){
         try{
-            // on récupère les infos passés en POST
-            $idVisi = $request->request->get("idVisi");
-            //$idVisi->json_decode()
+            // on récupère les infos passés en POST et on désérialize
             
-            //return new JsonResponse($idVisi);
-            $idPra = $request->request->get('praNum');
-            $dateVisite = new DateTime($request->request->get('dateVisite'));
-            $bilan = $request->request->get('bilan');
+            $leRapport = $request->request->get('leRapport');
+            $leRapport->json_decode();
+            
+            
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
             
-            //Puis on crée les objets et on les insère dans la BDD
             
-            $em = $this->getDoctrine()->getManager();
-            $rp2 = $em->getRepository('AndroidBundle:Visiteur');
-            $leVisiteur = $rp2->findOneBy(array('visMatricule'=>$idVisi));
-        
-           
+            $leVisiteur = $this->getLeVisi($idVisi);
             $lePraticien = $this->getLePraticien($idPra);
             $rp = $em->getRepository('AndroidBundle:RapportVisite');
-            $leRapport = new RapportVisite();
+            
             $leRapport->setConsulte(false);
             $leRapport->setPraNum($lePraticien);
-            $leRapport->setRapBilan($bilan);
             $leRapport->setRapDaterapport($dateRapport);
-            $leRapport->setRapDatevisite($dateVisite);
             $leRapport->setVisMatricule($leVisiteur);
             
             

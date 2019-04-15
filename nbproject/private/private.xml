@@ -5,8 +5,8 @@
         <group>
             <file>file:/var/www/html/gsbAndroid/src/AndroidBundle/Entity/RapportVisite.php</file>
             <file>file:/var/www/html/gsbAndroid/src/AndroidBundle/Entity/Praticien.php</file>
-            <file>file:/var/www/html/gsbAndroid/src/AndroidBundle/Resources/config/routing.yml</file>
             <file>file:/var/www/html/gsbAndroid/src/AndroidBundle/Controller/AndroidController.php</file>
+            <file>file:/var/www/html/gsbAndroid/src/AndroidBundle/Entity/Visiteur.php</file>
         </group>
     </open-files>
 </project-private>
