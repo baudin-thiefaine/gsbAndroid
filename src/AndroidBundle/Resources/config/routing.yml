@@ -39,3 +39,7 @@ recupRapportParId:
 sd:
     path:   /getLeVisiAction/{idVisiteur}
     defaults: {_controller:AndroidBundle:Android:getLeVisi}
+    
+recupRapportParDate:
+    path:  /recupRapportParDate/{idVisiteur}/{date}
+    defaults: {_controller:AndroidBundle:Android:recupListRapportDate}

@@ -149,6 +149,31 @@ class AndroidController extends Controller
         
         
     }
+    //Creation d'une fonction pour récupérer les Rapports en fonction d'un mois et d'une année sélectionner et de l'id du visiteur
+    public function recupListRapportDateAction($idVisiteur,$date){
+         
+        try{
+            $visiteur = $this->getLeVisi($idVisiteur);
+            $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+            $lesRapportsDate = array();
+            $lesRapports = $rp->findBy(array('visMatricule' => $visiteur));
+            foreach($leRapport as $lesRapports){
+                $ladate = $leRapport->getRapDateVisite;
+                $dateStr=$ladate->format("Y-m");
+                if($dateStr.equals($date)){
+                    array_push($lesRapportsDate,$leRapport);
+                }
+            }
+
+            $this->get('serializer')->serialize($LesRapportDate, 'json');
+            return new JsonResponse($LesRapportDate);
+        }
+        catch (Exception $ex){
+            return new JsonResponse($ex);
+        }
+        
+    }
     
     
     /**
