@@ -273,6 +273,21 @@ class AndroidController extends Controller
             return new JsonResponse($ex);
         }
     }
+    public function getLesDateRapportAction($idVisiteur){
+        $em = $this->getDoctrine()->getManager();
+            $rp = $em->getRepository('AndroidBundle:RapportVisite');
+
+            $lesRapports = $rp->findBy(array('visMatricule' => $idVisiteur));
+            $lesRapportsDate = array();
+            
+            foreach($lesRapports as $leRapport){
+                $date = $leRapport->getRapDaterapport();
+                array_push($lesRapportsDate,$date);
+                
+            }
+            $this->get('serializer')->serialize($lesRapportsDate, 'json');
+            return new JsonResponse($lesRapportsDate);
+    }
     
     
     /**
