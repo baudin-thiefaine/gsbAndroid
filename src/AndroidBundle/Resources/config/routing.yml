@@ -42,4 +42,9 @@ sd:
     
 recupRapportParDate:
     path:  /recupRapportParDate/{idVisiteur}/{date}
+ 
     defaults: {_controller:AndroidBundle:Android:recupListRapportDate}
+    
+recupDateDuRapport:
+    path: /recupDateDuRapport/{idVisiteur}
+    defaults: {_controller:AndroidBundle:Android:getLesDateRapport}
