@@ -177,13 +177,20 @@ class AndroidController extends Controller
             $dateVisite = $leRapport->dateVisite;
             
             
-            $annee = $dateVisite->year;
-            $mois = $dateVisite->month;
-            $jour = $dateVisite->dayOfMonth;
+            $int_annee = $dateVisite->year;
+            $int_mois = $dateVisite->month;
+            $int_jour = $dateVisite->dayOfMonth;
             
-            //$laDateVisite = new DateTime(""+$annee+"-"+$mois+"-"+$jour);
+            $jour = strval($int_jour);
+            $mois = strval($int_mois);
+            $annee = strval($int_annee);
+            
+            $dateCreator = $jour."-".$mois."-".$annee;
             
             
+            $laDateVisite = DateTime::createFromFormat("d-m-Y", $dateCreator);
+            
+              
             $leVisiteur = $this->getLeVisi($idVisi);
             $lePraticien = $this->getLePraticien($idPra);
             
@@ -194,8 +201,9 @@ class AndroidController extends Controller
             $rapportInsere->setPraNum($lePraticien);
             $rapportInsere->setRapBilan($bilan);
             $rapportInsere->setRapDaterapport($dateRapport);
-            //$rapportInsere->setRapDatevisite($laDateVisite);
+            $rapportInsere->setRapDatevisite($laDateVisite);
             $rapportInsere->setVisMatricule($leVisiteur);
+            
             
             
             $em = $this->getDoctrine()->getManager();
@@ -203,8 +211,6 @@ class AndroidController extends Controller
             $em->persist($rapportInsere);
             
             $em->flush();
-            return new JsonResponse(true);
-            $em->clear();
             return new JsonResponse(true);
             
         } 
