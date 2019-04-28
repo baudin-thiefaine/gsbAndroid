@@ -32,13 +32,12 @@ class AndroidController extends Controller
     
     /**
      * connexionAction
-     * 
+     * route : /connexion/{login}/{password}
      * 
      * @param string $login Le login entré par le visiteur
      * @param string $password le mot de passe entré par le visiteur
      *
-     * @return String Retourne le matricule du visiteur si il a entré les bons
-     * logs, et un boolean FALSE si le login/password est inconnu ou faux.
+     * @return Json(Visiteur) retourne le visiteur si le login et mot de passe sont corrects, et NULL sinon
      *
      */
     public function connexionAction($login, $password){
@@ -70,6 +69,16 @@ class AndroidController extends Controller
         return $leVisiteur;
     }
     
+    /**
+     * getLeVisiAction
+     * route : /getVisi/{idVisiteur}
+     * 
+     * @param string $idVisiteur Le matricule du visiteur
+     *
+     * @return Visiteur Retourne un objet de type Visiteur correspondant 
+     *                  au matricule passé en parametre
+     *
+     */
     public function getLeVisiAction($idVisiteur){
         $em = $this->getDoctrine()->getManager();
         $rp = $em->getRepository('AndroidBundle:Visiteur');
@@ -79,12 +88,12 @@ class AndroidController extends Controller
     }
     
     /**
-     * getLeVisi
+     * getLePraticien
      * 
-     * @param string $idVisiteur Le matricule du visiteur
+     * @param string $idPrat Le numéro du praticien
      *
-     * @return Visiteur Retourne un objet de type Visiteur correspondant 
-     *                  au matricule passé en parametre
+     * @return Visiteur Retourne un objet de type Praticien correspondant 
+     *                  au numéro du praticien passé en parametre
      *
      */
     public function getLePraticien($idPrat){
@@ -95,8 +104,8 @@ class AndroidController extends Controller
     }
     
     /**
-     * recupListeRapportAction
-     * 
+     * recupListePraticienAction
+     * route : /recupListePraticien/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
@@ -123,7 +132,7 @@ class AndroidController extends Controller
     
     /**
      * recupListeRapportAction
-     * 
+     * route : /recupListeRapport/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
@@ -149,7 +158,20 @@ class AndroidController extends Controller
         
         
     }
-    //Creation d'une fonction pour récupérer les Rapports en fonction d'un mois et d'une année sélectionner et de l'id du visiteur
+    
+    
+    /**
+     * recupListRapportDateAction
+     * route : /recupRapportParDate/{idVisiteur}/{date}
+     * 
+     * 
+     * @param string $idVisiteur Le matricule du visiteur
+     * @param string $date la date sous format "année-mois"
+     *
+     * @return Json<RapportVisite> Retourne un tableau Json contenant les rapports
+     * du visiteur pour le mois passé en parametre
+     *
+     */
     public function recupListRapportDateAction($idVisiteur,$date){
          
         try{
@@ -177,64 +199,44 @@ class AndroidController extends Controller
     
     
     /**
+     * ajouterRapportAction
      * 
+     * route : /ajouterRapport
+     * Passage d'un rapport par requête POST
      * @param Request $request
-     * @return JsonResponse
+     * @return JsonResponse true si le rapport a été correctement inséré, le message d'erreur sinon
      */
     public function ajouterRapportAction(Request $request){
         try{
             // on récupère les infos passés en POST et on désérialize
             
             $rapport = $request->request->get('rapport');
-            
             $leRapport = json_decode($rapport);
-              
             $dateRapport = new DateTime('now');
             $dateRapport->format('d-m-Y');
-            
-            //return new JsonResponse($leRapport);
-            
-            
-            
             $idVisi = $leRapport->numVis;
             $idPra = $leRapport->numPra;
             $bilan = $leRapport->rapBilan;
             $dateVisite = $leRapport->dateVisite;
-            
-            
             $int_annee = $dateVisite->year;
             $int_mois = $dateVisite->month;
             $int_jour = $dateVisite->dayOfMonth;
-            
             $jour = strval($int_jour);
             $mois = strval($int_mois);
             $annee = strval($int_annee);
-            
             $dateCreator = $jour."-".$mois."-".$annee;
-            
-            
             $laDateVisite = DateTime::createFromFormat("d-m-Y", $dateCreator);
-            
-              
             $leVisiteur = $this->getLeVisi($idVisi);
             $lePraticien = $this->getLePraticien($idPra);
-            
-            
             $rapportInsere = new RapportVisite();
-            
             $rapportInsere->setConsulte(false);
             $rapportInsere->setPraNum($lePraticien);
             $rapportInsere->setRapBilan($bilan);
             $rapportInsere->setRapDaterapport($dateRapport);
             $rapportInsere->setRapDatevisite($laDateVisite);
             $rapportInsere->setVisMatricule($leVisiteur);
-            
-            
-            
             $em = $this->getDoctrine()->getManager();
-            
             $em->persist($rapportInsere);
-            
             $em->flush();
             return new JsonResponse(true);
             
@@ -246,6 +248,9 @@ class AndroidController extends Controller
     }
     
     /**
+     * 
+     * getLesRapportsParDateAction
+     * route : /getLesRapportsParDate/{mois}/{annee}
      * 
      * @param int $mois
      * @param int $annee
@@ -279,6 +284,19 @@ class AndroidController extends Controller
             return new JsonResponse($ex);
         }
     }
+    
+    /**
+     * 
+     * getLesDateRapportAction
+     * route : /recupDateDuRapport/{idVisiteur}
+     * 
+     * @param string $idVisiteur Le matricule du visiteur
+     * 
+     * @return Json<RapportVisite> Retourne un tableau Json contenant les dates 
+     *                    des rapports du visiteur dont le matricule est passé en parametre
+     * 
+     * 
+     */
     public function getLesDateRapportAction($idVisiteur){
         $em = $this->getDoctrine()->getManager();
             $rp = $em->getRepository('AndroidBundle:RapportVisite');
@@ -297,7 +315,9 @@ class AndroidController extends Controller
     
     
     /**
+     * getunRapportParIdAction
      * 
+     * route : /recupRapportParId/{idRapport}/{visMatricule}
      * @param int $idRapport : le numero du rapport à retourner
      * @param String $visMatricule : le numero du visiteur a qui appartient le rapport
      * @return Json<RapportVisite> Retourne l'objet correspondant
