@@ -31,7 +31,7 @@ class AndroidController extends Controller
     
     
     /**
-     * connexionAction
+     * @name connexionAction
      * route : /connexion/{login}/{password}
      * 
      * @param string $login Le login entré par le visiteur
@@ -54,7 +54,7 @@ class AndroidController extends Controller
     
         
     /**
-     * getLeVisi
+     * @name getLeVisi
      * 
      * @param string $idVisiteur Le matricule du visiteur
      *
@@ -70,7 +70,7 @@ class AndroidController extends Controller
     }
     
     /**
-     * getLeVisiAction
+     * @name getLeVisiAction
      * route : /getVisi/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
@@ -88,7 +88,7 @@ class AndroidController extends Controller
     }
     
     /**
-     * getLePraticien
+     * @name getLePraticien
      * 
      * @param string $idPrat Le numéro du praticien
      *
@@ -104,7 +104,7 @@ class AndroidController extends Controller
     }
     
     /**
-     * recupListePraticienAction
+     * @name recupListePraticienAction
      * route : /recupListePraticien/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
@@ -131,7 +131,7 @@ class AndroidController extends Controller
     }
     
     /**
-     * recupListeRapportAction
+     * @name recupListeRapportAction
      * route : /recupListeRapport/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
@@ -161,7 +161,7 @@ class AndroidController extends Controller
     
     
     /**
-     * recupListRapportDateAction
+     * @name recupListRapportDateAction
      * route : /recupRapportParDate/{idVisiteur}/{date}
      * 
      * 
@@ -199,7 +199,7 @@ class AndroidController extends Controller
     
     
     /**
-     * ajouterRapportAction
+     * @name ajouterRapportAction
      * 
      * route : /ajouterRapport
      * Passage d'un rapport par requête POST
@@ -249,7 +249,7 @@ class AndroidController extends Controller
     
     /**
      * 
-     * getLesRapportsParDateAction
+     * @name getLesRapportsParDateAction
      * route : /getLesRapportsParDate/{mois}/{annee}
      * 
      * @param int $mois
@@ -287,7 +287,7 @@ class AndroidController extends Controller
     
     /**
      * 
-     * getLesDateRapportAction
+     * @name getLesDateRapportAction
      * route : /recupDateDuRapport/{idVisiteur}
      * 
      * @param string $idVisiteur Le matricule du visiteur
@@ -315,7 +315,7 @@ class AndroidController extends Controller
     
     
     /**
-     * getunRapportParIdAction
+     * @name getunRapportParIdAction
      * 
      * route : /recupRapportParId/{idRapport}/{visMatricule}
      * @param int $idRapport : le numero du rapport à retourner
@@ -349,9 +349,14 @@ class AndroidController extends Controller
         }
     }
 
-
+    /**
+     * @name testAction
+     * route : /test
+     * Permet de tester la connexion au serveur
+     * @return true si la connexion au serveur est possible
+     */
     public function testAction(){
-        return new JsonResponse();
+        return true;
     }
     
 }
