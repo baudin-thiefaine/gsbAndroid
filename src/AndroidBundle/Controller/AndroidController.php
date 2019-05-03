@@ -50,7 +50,7 @@ class AndroidController extends Controller
         $this->get('serializer')->serialize($leVisiteur, 'json');
         return new JsonResponse($leVisiteur);
         
-    }  
+    }
     
         
     /**
@@ -155,8 +155,6 @@ class AndroidController extends Controller
         catch (Exception $ex){
             return new JsonResponse($ex);
         }
-        
-        
     }
     
     
